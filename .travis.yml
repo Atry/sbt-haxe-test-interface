@@ -4,7 +4,7 @@ before_install:
  - travis_retry sudo add-apt-repository ppa:eyecreate/haxe -y
  - travis_retry sudo apt-get update -qq
  - travis_retry sudo apt-get install -qq neko ocaml
- - haxe_file=haxe_latest.tar.gz
+ - haxe_file=haxe_2015-05-12_master_77d171b.tar.gz
  - travis_retry wget http://hxbuilds.s3-website-us-east-1.amazonaws.com/builds/haxe/linux64/$haxe_file
  - sudo tar zxvf $haxe_file
  - sudo mv haxe-*/ haxe/
