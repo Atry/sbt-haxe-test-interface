@@ -16,6 +16,10 @@ version := "0.1.2-SNAPSHOT"
 
 crossScalaVersions := Seq("2.10.4", "2.11.2")
 
+releaseUseGlobalVersion := false
+
+releaseCrossBuild := true
+
 libraryDependencies += "org.scala-sbt" % "test-interface" % "1.0"
 
 doc in Compile :=  {
@@ -44,6 +48,24 @@ publishTo <<= (isSnapshot) { isSnapshot: Boolean =>
   else
     Some("releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2")
 }
+
+releasePublishArtifactsAction := PgpKeys.publishSigned.value
+
+import ReleaseTransformations._
+releaseProcess := Seq[ReleaseStep](
+  checkSnapshotDependencies,
+  inquireVersions,
+  runClean,
+  runTest,
+  setReleaseVersion,
+  commitReleaseVersion,
+  tagRelease,
+  publishArtifacts,
+  setNextVersion,
+  commitNextVersion,
+  releaseStepCommand("sonatypeRelease"),
+  pushChanges
+)
 
 scmInfo := Some(ScmInfo(
   url("https://github.com/github/sbt-haxe-test-interface"),
